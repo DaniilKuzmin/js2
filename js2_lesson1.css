@@ -1,0 +1,32 @@
+.container {
+    margin: 0 auto;
+    width: 900px;
+}
+
+.products {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-item {
+    width: 500px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.heading {
+    text-align: center;
+}
+
+.btn-cart, .by-btn {
+    border-radius: 5px;
+}
+
+.product-img {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    width: 30%;
+    height: 100%;
+}

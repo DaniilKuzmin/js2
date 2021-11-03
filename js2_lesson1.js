@@ -6,11 +6,12 @@ const products = [
     {id:4, title: 'Gamepad', price: 4500},
 ];
 
-const renderProduct = (title, price) => {
+const renderProduct = (title, price, img = 'img/hcyr.jpg') => {
     return `<div class="product-item">
-        <h3>${title}</h3>
-        <p>${price}</p>
+        <h3 class="heading">${title}</h3>
+        <p>Цена: ${price}</p>
         <button class="by-btn">Добавить в корзину</button>
+        <img class="product-img" src='${img}' alt="#">
     </div>`;
 };
 
@@ -20,7 +21,7 @@ const renderProducts = (list) => {
     });
     console.log(productList);
     productList.forEach(function (item) {
-        document.querySelector('.products').innerHTML += `${item}`
+        document.querySelector('.products').insertAdjacentHTML(`beforeend`, item);
     })
 };
 

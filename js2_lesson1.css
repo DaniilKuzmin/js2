@@ -1,6 +1,7 @@
 .container {
     margin: 0 auto;
     width: 900px;
+    position: relative;
 }
 
 .products {
@@ -29,4 +30,20 @@
     top: 25px;
     width: 30%;
     height: 100%;
+}
+
+.totalPrice {
+    bottom: -40px;
+}
+.hamburgers {
+    margin-top: 50px;
+}
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.size {
+    width: 200px;
 }

@@ -59,48 +59,218 @@ const productList = new ProductList();
 
 // HAMBURGERS
 
-class Hamburger {
-    constructor(size, stuffing = []) {
-        this.size = size;
-        this.stuffing = stuffing;
-        this.toppings = [].join('\n');
+const hamburger = {
+    size:'',
+    toppings: {
+        cheese: false,
+        salad: false,
+        potato: false
+    },
+    adds: {
+        seas: false,
+        mayo: false
+    },
+    totalPrice: 0,
+    totalClories: 0,
+    renderTotalCalc() {
+        const toppings = [];
+        const adds = [];
+        if (this.size === '') return 'Нужно выбрать размер';
+        if (this.size === 'big') {
+            size = 'большой';
+        } else if (this.size === 'small'){
+            size = 'небольшой';
+        }
+        if (this.toppings.cheese) {
+            let cheese = 'сыром';
+            toppings.push(cheese);
+        }
+        if (this.toppings.salad) {
+            let salad = 'салатом';
+            toppings.push(salad);
+        }
+        if (this.toppings.potato) {
+            let potato = 'картофелем';
+            toppings.push(potato);
+        }
+        if (this.adds.seas) {
+            let seas = 'приправа';
+            adds.push(seas);
+        }
+        if (this.adds.mayo) {
+            let mayo = 'майонез';
+            adds.push(mayo);
+        }
+        return `<div class="totalCalculate">Вы заказали ${size} бургер с ${toppings}. Дополнительно: ${adds}. <br> Стоимостью: ${this.totalPrice}руб. <br> Общей калорийностью: ${this.totalClories}ккал.</div>`
     }
+};
 
-    addTopping () {
-
-    }
-
-    removeTopping() {
-
-    }
-
-    getToppings() {
-
-    }
-
-    getSize() {
-        return this.size;
-    }
-
-    getStuffing() {
-
-    }
-
-    calcPrice() {
-
-    }
-
-    calcCalories() {
-
+class topping {
+    constructor(price, colories) {
+        this.price = price;
+        this.colories = colories;
     }
 }
 
-class MenuClickHandler {
-   constructor() {
-   }
-}
+const small = new topping(50 , 20);
+const big = new topping(100 , 40);
+const cheese = new topping(10 , 20);
+const salad = new topping(20 , 5);
+const potato = new topping(15 , 10);
+const seas = new topping(15 , 0);
+const mayo = new topping(20 , 5);
 
-const bigMak = new Hamburger('', '')
+        //Обработчик события клик по кнопке в меню
+
+function clickHandler(event) {
+    if (event.target.tagName != 'BUTTON') return;
+    if (event.target.id === hamburger.size) return;
+    console.log(event.target.id);
+    if (event.target.id === 'small') {
+        if (hamburger.size === '') {
+            hamburger.size = 'small';
+            hamburger.totalPrice += small.price;
+            hamburger.totalClories += small.colories;
+        } else if (hamburger.size === 'big') {
+            hamburger.size = 'small';
+            hamburger.totalPrice -= big.price;
+            hamburger.totalClories -= big.colories;
+            hamburger.totalPrice += small.price;
+            hamburger.totalClories += small.colories;
+        }
+    } else if (event.target.id === 'big') {
+        if (hamburger.size === '') {
+            hamburger.size = 'big';
+            hamburger.totalPrice += big.price;
+            hamburger.totalClories += big.colories;
+        } else if (hamburger.size === 'small') {
+            hamburger.size = 'big';
+            hamburger.totalPrice -= small.price;
+            hamburger.totalClories -= small.colories;
+            hamburger.totalPrice += big.price;
+            hamburger.totalClories += big.colories;
+        }
+    }
+    if (event.target.id === 'cheese') {
+        if (hamburger.toppings.cheese === false) {
+            hamburger.toppings.cheese = true;
+            hamburger.totalPrice += cheese.price;
+            hamburger.totalClories += cheese.colories;
+        }
+    } else if (event.target.id === 'cheese-del') {
+        if (hamburger.toppings.cheese === true){
+            hamburger.toppings.cheese = false;
+            hamburger.totalPrice -= cheese.price;
+            hamburger.totalClories -= cheese.colories;
+        }
+    }
+    if (event.target.id === 'potato') {
+        if (hamburger.toppings.potato === false) {
+            hamburger.toppings.potato = true;
+            hamburger.totalPrice += potato.price;
+            hamburger.totalClories += potato.colories;
+        }
+    } else if (event.target.id === 'potato-del') {
+        if (hamburger.toppings.potato === true){
+            hamburger.toppings.potato = false;
+            hamburger.totalPrice -= potato.price;
+            hamburger.totalClories -= potato.colories;
+        }
+    }
+    if (event.target.id === 'salad') {
+        if (hamburger.toppings.salad === false) {
+            hamburger.toppings.salad = true;
+            hamburger.totalPrice += salad.price;
+            hamburger.totalClories += salad.colories;
+        }
+    } else if (event.target.id === 'salad-del') {
+        if (hamburger.toppings.salad === true){
+            hamburger.toppings.salad = false;
+            hamburger.totalPrice -= salad.price;
+            hamburger.totalClories -= salad.colories;
+        }
+    }
+    if (event.target.id === 'seas') {
+        if (hamburger.adds.seas === false) {
+            hamburger.adds.seas = true;
+            hamburger.totalPrice += seas.price;
+            hamburger.totalClories += seas.colories;
+        }
+    } else if (event.target.id === 'seas-del') {
+        if (hamburger.adds.seas === true){
+            hamburger.adds.seas = false;
+            hamburger.totalPrice -= seas.price;
+            hamburger.totalClories -= seas.colories;
+        }
+    }
+    if (event.target.id === 'mayo') {
+        if (hamburger.adds.mayo === false) {
+            hamburger.adds.mayo = true;
+            hamburger.totalPrice += mayo.price;
+            hamburger.totalClories += mayo.colories;
+        }
+    } else if (event.target.id === 'mayo-del') {
+        if (hamburger.adds.mayo === true){
+            hamburger.adds.mayo = false;
+            hamburger.totalPrice -= mayo.price;
+            hamburger.totalClories -= mayo.colories;
+        }
+    }
+    console.log(hamburger)
+}
+document.querySelector('.menu').addEventListener('click', clickHandler);
+
+//обработчик события клика по кнопке Рассчитать
+
+function calculateClickHandler(event) {
+    document.querySelector('#calculate').insertAdjacentHTML('afterend',hamburger.renderTotalCalc());
+}
+document.querySelector('#calculate').addEventListener('click', calculateClickHandler)
+
+
+
+// class Hamburger {
+//     constructor(size, stuffing = []) {
+//         this.size = size;
+//         this.stuffing = stuffing;
+//         this.toppings = [].join('\n');
+//     }
+
+//     addTopping () {
+
+//     }
+
+//     removeTopping() {
+
+//     }
+
+//     getToppings() {
+
+//     }
+
+//     getSize() {
+//         return this.size;
+//     }
+
+//     getStuffing() {
+
+//     }
+
+//     calcPrice() {
+
+//     }
+
+//     calcCalories() {
+
+//     }
+// }
+
+// class MenuClickHandler {
+//    constructor() {
+//    }
+// }
+
+//const bigMak = new Hamburger('', '')
 // 'use strict'
 // const products = [
 //     {id:1, title: 'Notebook', price: 20000},
